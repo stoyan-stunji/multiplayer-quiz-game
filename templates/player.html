@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,
+  initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Quiz Player</title>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #f5f5f5;
+      color: #333;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    #question {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    #options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    @media (min-width: 768px) {
+      #options {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .option-btn {
+      padding: 15px;
+      font-size: 1.1rem;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      min-height: 60px;
+      touch-action: manipulation;
+    }
+
+    .option-btn:hover, .option-btn:active {
+      background-color: #2980b9;
+    }
+
+    #feedback {
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .correct {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .incorrect {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    #score-container {
+      font-size: 1.2rem;
+      padding: 10px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    #score {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+
+    .waiting {
+      text-align: center;
+      padding: 20px;
+      font-style: italic;
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+  <h1>Quiz Game</h1>
+  <div id="question" class="waiting">Waiting for the next question...</div>
+  <div id="options"></div>
+  <p id="feedback"></p>
+  <div id="score-container"><b>Score:</b> <span id="score">0</span></div>
+
+  <script>
+    var socket = io();
+    var playerName = "{{ name }}";
+
+    socket.on("connect", function() {
+      socket.emit("register", {name: playerName});
+    });
+
+    socket.on("question", function(data) {
+      document.getElementById("question").className = "";
+      document.getElementById("question").innerText = data.question;
+
+      var optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+
+      data.options.forEach(opt => {
+        var btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.className = "option-btn";
+
+        btn.addEventListener('touchstart', function(e) {
+          e.preventDefault();
+          // A, B, C, D
+          socket.emit("answer", {choice: opt[0]});
+        }, {passive: false});
+
+        btn.addEventListener('click', function() {
+          socket.emit("answer", {choice: opt[0]});
+        });
+
+        optionsDiv.appendChild(btn);
+      });
+    });
+
+    socket.on("message", function(data) {
+      var feedback = document.getElementById("feedback");
+      feedback.innerText = data.msg;
+
+      if (data.msg.toLowerCase().includes('correct')) {
+        feedback.className = 'correct';
+      } else if (data.msg.toLowerCase().includes('incorrect')
+      || data.msg.toLowerCase().includes('wrong')) {
+        feedback.className = 'incorrect';
+      } else {
+        feedback.className = '';
+      }
+    });
+
+    socket.on("score", function(data) {
+      document.getElementById("score").innerText = data.score;
+    });
+  </script>
+</body>
+</html>
