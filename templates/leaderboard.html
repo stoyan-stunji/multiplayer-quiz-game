@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard</title>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .leaderboard-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    thead {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    th {
+      padding: 18px 15px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    th:last-child {
+      text-align: right;
+    }
+
+    tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: background 0.3s ease;
+    }
+
+    tr:last-child {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    td {
+      padding: 15px;
+      font-size: 1.1rem;
+    }
+
+    td:last-child {
+      text-align: right;
+      font-weight: 600;
+    }
+
+    .rank {
+      display: flex;
+      align-items: center;
+      width: 30px;
+      font-weight: bold;
+    }
+
+    .top-3 {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 255, 255, 0.1));
+    }
+
+    .medal {
+      margin-right: 10px;
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 30px;
+      font-weight: bold;
+    }
+
+    .gold {
+      background: linear-gradient(135deg, #ffd700, #daa520);
+      color: #000;
+    }
+
+    .silver {
+      background: linear-gradient(135deg, #c0c0c0, #a9a9a9);
+      color: #000;
+    }
+
+    .bronze {
+      background: linear-gradient(135deg, #cd7f32, #8c6b46);
+      color: #000;
+    }
+
+    .player-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      font-size: 1.2rem;
+    }
+
+    .status {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+
+    .online {
+      background: #4caf50;
+    }
+
+    .offline {
+      background: #f44336;
+    }
+
+    .score {
+      font-size: 1.2rem;
+    }
+
+    .last-updated {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    @media screen and (max-width: 768px) {
+      th, td {
+        padding: 12px 8px;
+      }
+
+      th:nth-child(2), td:nth-child(2) {
+        padding-left: 5px;
+      }
+
+      .avatar {
+        width: 35px;
+        height: 35px;
+        margin-right: 10px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      th, td {
+        padding: 10px 5px;
+        font-size: 0.9rem;
+      }
+
+      th:first-child, td:first-child {
+        padding-left: 10px;
+      }
+
+      th:last-child, td:last-child {
+        padding-right: 10px;
+      }
+
+      .avatar {
+        width: 30px;
+        height: 30px;
+        margin-right: 8px;
+        font-size: 1rem;
+      }
+
+      .medal {
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        margin-right: 5px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    @keyframes highlight {
+      0% { background-color: rgba(255, 255, 255, 0.3); }
+      100% { background-color: transparent; }
+    }
+
+    .updated {
+      animation: highlight 1s ease;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      font-size: 1.2rem;
+    }
+
+    .loading i {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-trophy"></i> Leaderboard</h1>
+      <p class="subtitle">Live updates of player scores</p>
+    </header>
+
+    <div class="leaderboard-container">
+      <table id="leaderboard">
+        <thead>
+          <tr>
+            <th width="10%">Rank</th>
+            <th width="70%">Player</th>
+            <th width="20%">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="3">
+              <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i>Waiting for data...
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="last-updated" id="last-updated"></p>
+    </div>
+  </div>
+
+  <script>
+    var socket = io();
+    var currentPlayers = [];
+
+    socket.on("leaderboard_update", function(data) {
+      updateLeaderboard(data);
+      updateLastUpdated();
+    });
+
+    function updateLeaderboard(data) {
+      var table = document.getElementById("leaderboard");
+
+      if (data && data.length > 0) {
+        table.querySelector('tbody').innerHTML = '';
+
+        data.sort((a, b) => b.score - a.score);
+        data.forEach((player, index) => {
+          var row = document.createElement("tr");
+
+          if (isPlayerUpdated(player, index)) {
+            row.classList.add('updated');
+          }
+
+          if (index < 3) {
+            row.classList.add('top-3');
+          }
+
+          var rankCell = document.createElement("td");
+          var rankDiv = document.createElement("div");
+          rankDiv.classList.add("rank");
+
+          if (index === 0) {
+            rankDiv.innerHTML = '<span class="medal gold">1</span>';
+          } else if (index === 1) {
+            rankDiv.innerHTML = '<span class="medal silver">2</span>';
+          } else if (index === 2) {
+            rankDiv.innerHTML = '<span class="medal bronze">3</span>';
+          } else {
+            rankDiv.textContent = index + 1;
+          }
+
+          rankCell.appendChild(rankDiv);
+
+          var playerCell = document.createElement("td");
+          var playerDiv = document.createElement("div");
+          playerDiv.classList.add("player-info");
+
+          var avatar = document.createElement("div");
+          avatar.classList.add("avatar");
+          avatar.innerHTML = '<i class="fas fa-user"></i>';
+
+          var nameSpan = document.createElement("span");
+          nameSpan.textContent = player.name;
+
+          var status = document.createElement("span");
+          status.classList.add("status");
+          status.classList.add("online");
+
+          playerDiv.appendChild(avatar);
+          playerDiv.appendChild(nameSpan);
+          playerDiv.appendChild(status);
+          playerCell.appendChild(playerDiv);
+
+          var scoreCell = document.createElement("td");
+          var scoreDiv = document.createElement("div");
+          scoreDiv.classList.add("score");
+          scoreDiv.textContent = player.score;
+          scoreCell.appendChild(scoreDiv);
+
+          row.appendChild(rankCell);
+          row.appendChild(playerCell);
+          row.appendChild(scoreCell);
+          table.querySelector('tbody').appendChild(row);
+        });
+
+        currentPlayers = data;
+      }
+    }
+
+    function isPlayerUpdated(player, newIndex) {
+      const oldPlayerIndex = currentPlayers.findIndex(p => p.name === player.name);
+      if (oldPlayerIndex === -1) {
+        return true;
+      }
+      const oldPlayer = currentPlayers[oldPlayerIndex];
+      if (oldPlayer.score !== player.score) {
+        return true;
+      }
+      return false;
+    }
+
+    function updateLastUpdated() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString();
+      document.getElementById('last-updated').textContent = `Last updated: ${timeString}`;
+    }
+
+    updateLastUpdated();
+  </script>
+</body>
+</html>

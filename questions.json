@@ -1,0 +1,158 @@
+[
+    {
+        "question": "0. Колко e 2 + 2?",
+        "options": ["A) 4", "B) 44", "C) 444", "D) 4444"],
+        "correct": "A",
+        "points": {"A": 1, "B": 0, "C": 0, "D": 0}
+    },
+    {
+        "question": "1. hibernirah tolkova mnogo I se subudih predi malko",
+        "options": ["A) Пепи", "B) Димитър", "C) Евгени", "D) Ивайло"],
+        "correct": "A",
+        "points": {"A": 1, "B": 0, "C": 0, "D": 0}
+    },
+    {
+        "question": "2. О, не, разкри ме, че съм тайно черна",
+        "options": ["A) Радост", "B) Джоджо", "C) Али", "D) Ален"],
+        "correct": "B",
+        "points": {"A": 0, "B": 2, "C": 0, "D": 0}
+    },
+    {
+        "question": "3. shtom ti e ligavo znachi si liglio",
+        "options": ["A) Пепи", "B) Димитър", "C) Крис", "D) Ахмет"],
+        "correct": "B",
+        "points": {"A": 0, "B": 1, "C": 0, "D": 0}
+    },
+    {
+        "question": "4. mergvam s inner dqvola si",
+        "options": ["A) Пепи", "B) Евгени", "C) Димитър", "D) Стоян"],
+        "correct": "A",
+        "points": {"A": 1, "B": 0, "C": 0, "D": 0}
+    },
+    {
+        "question": "5. mestiriozno syshtestvo",
+        "options": ["A) Димитър", "B) Ивайло", "C) Пепи", "D) Крис"],
+        "correct": "C",
+        "points": {"A": 0, "B": 0, "C": 1, "D": 0}
+    },
+    {
+        "question": "6. а аз знам да не влизам никъде където не е Едрев",
+        "options": ["A) Димитър", "B) Ивайло", "C) Пепи", "D) Евгени"],
+        "correct": "D",
+        "points": {"A": 0, "B": 0, "C": 0, "D": 1}
+    },
+    {
+        "question": "7. az ne zabravqm/ prosto chesto si pripomnqm neshta",
+        "options": ["A) Димитър", "B) Ивайло", "C) Пепи", "D) Евгени"],
+        "correct": "A",
+        "points": {"A": 1, "B": 0, "C": 0, "D": 0}
+    },
+    {
+        "question": "8. В едната ръка лежи бутче в другата питка",
+        "options": ["A) Крис", "B) Стоян", "C) Ален", "D) Евгени"],
+        "correct": "D",
+        "points": {"A": 0, "B": 0, "C": 0, "D": 1}
+    },
+    {
+        "question": "9. Ще ти навра една сърма отзад на 31ви",
+        "options": ["A) Димитър", "B) Стоян", "C) Пепи", "D) Евгени"],
+        "correct": "B",
+        "points": {"A": 0, "B": 1, "C": 0, "D": 0}
+    },
+    {
+        "question": "9. Ще ти навра една сърма отзад на 31ви",
+        "options": ["A) Димитър", "B) Стоян", "C) Пепи", "D) Евгени"],
+        "correct": "B",
+        "points": {"A": 0, "B": 1, "C": 0, "D": 0}
+    },
+    {
+        "question": "10. Бе момиче/Намери си момче/По-лесни",
+        "options": ["A) Ивайло", "B) Димитър", "C) Евгени", "D) Ивайло"],
+        "correct": "A",
+        "points": {"A": 1, "B": 0, "C": 0, "D": 0}
+    },
+    {
+        "question": "11. дали николай димитров ще е победил майнкрафта",
+        "options": ["A) Ивайло", "B) Крис", "C) Евгени", "D) Ахмет"],
+        "correct": "C",
+        "points": {"A": 0, "B": 0, "C": 1, "D": 0}
+    },
+    {
+        "question": "12. mi dokolkoto mi se chu na arabski govori/ shtot prilicha na irlandec",
+        "options": ["A) Крис", "B) Ален", "C) Димитър", "D) Стоян"],
+        "correct": "C",
+        "points": {"A": 0, "B": 0, "C": 1, "D": 0}
+    },
+    {
+        "question": "13. RADIO TEAMS/ Abe toq showman mai zabrawil che sa ni za domashno ili weche nz",
+        "options": ["A) Димитър", "B) Ахмет", "C) Пепи", "D) Крис"],
+        "correct": "B",
+        "points": {"A": 0, "B": 3, "C": 0, "D": 0}
+    },
+    {
+        "question": "14. Ям/ Срам",
+        "options": ["A) Ивайло", "B) Стоян", "C) Пепи", "D) Ален"],
+        "correct": "C",
+        "points": {"A": 0, "B": 0, "C": 1, "D": 0}
+    },
+    {
+        "question": "15. защо ебат дракон в др дулитъл",
+        "options": ["A) Никита", "B) Стоян", "C) Крис", "D) Димитър"],
+        "correct": "D",
+        "points": {"A": 0, "B": 0, "C": 0, "D": 1}
+    },
+      {
+        "question": "16. тф путон не спря ли войната",
+        "options": ["A) Евгени", "B) Димитър", "C) Крис", "D) Ален"],
+        "correct": "C",
+        "points": {"A": 0, "B": 0, "C": 2, "D": 0}
+    },
+        {
+        "question": "17. дейба рибите",
+        "options": ["A) Евгени", "B) Стоян", "C) Димитър", "D) Ивайло"],
+        "correct": "A",
+        "points": {"A": 1, "B": 0, "C": 0, "D": 0}
+    },
+        {
+        "question": "18. Sweet old child of mine/ Не баш ама подобно",
+        "options": ["A) Евгени", "B) Стоян", "C) Димитър", "D) Ивайло"],
+        "correct": "D",
+        "points": {"A": 0, "B": 0, "C": 0, "D": 1}
+    },
+        {
+        "question": "19. Дано на кмета да му хареса",
+        "options": ["A) Евгени", "B) Слави", "C) Димитър", "D) Ивайло"],
+        "correct": "D",
+        "points": {"A": 0, "B": 0, "C": 0, "D": 1}
+    },
+        {
+        "question": "20. Диригентът май се беше заключил в тоалетната ама дойде",
+        "options": ["A) Евгени", "B) Ален", "C) Димитър", "D) Ивайло"],
+        "correct": "A",
+        "points": {"A": 1, "B": 0, "C": 0, "D": 0}
+    },
+        {
+        "question": "21. много реал/ реално + на господ + съотношение",
+        "options": ["A) Никита", "B) Ален", "C) Крис", "D) Ивайло"],
+        "correct": "B",
+        "points": {"A": 0, "B": 1, "C": 0, "D": 0}
+    },
+        {
+        "question": "22. taz baba korava ne se predava/ 6 leta veche qde shamari",
+        "options": ["A) Ахмет", "B) Ален", "C) Крис", "D) Димитър"],
+        "correct": "C",
+        "points": {"A": 0, "B": 0, "C": 2, "D": 0}
+    },
+        {
+        "question": "22. taz baba korava ne se predava/ 6 leta veche qde shamari",
+        "options": ["A) Ахмет", "B) Ален", "C) Крис", "D) Димитър"],
+        "correct": "C",
+        "points": {"A": 0, "B": 0, "C": 2, "D": 0}
+    },
+        {
+        "question": "23. не е принципно да",
+        "options": ["A) Крис", "B) Евгени", "C) Ален", "D) Слави"],
+        "correct": "B",
+        "points": {"A": 0, "B": 1, "C": 0, "D": 0}
+    }
+]
