@@ -52,6 +52,23 @@ https://[same-generated-symbols].ngrok-free.app/join?name=Stoyan
 stop
 ```
 
+### 6. Changing the questions:
+- You can change the questions by replacing the questions.json file;
+- But it has to follow the original structure:
+```
+[
+    {
+        "question": "0. How much is 2+2?",
+        "options": ["A) 4", "B) 44", "C) 444", "D) 4444"],
+        "correct": "A",
+        "points": {"A": 1, "B": 0, "C": 0, "D": 0}
+    },
+    {
+        ...
+    }
+]
+``` 
+
 ## 📸 Screenshots
 -
 -
